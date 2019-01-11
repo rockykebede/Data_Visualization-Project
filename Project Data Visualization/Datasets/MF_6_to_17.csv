@@ -1,3 +1,3 @@
-﻿Employment Status,      Sleeping,      Housework,      Food preparation and cleanup,      Lawn and garden care,      Grocery shopping,"      Consumer goods purchases, except grocery shopping",      Caring for and helping household children,           Physical care,           Education-related activities,           Reading to/with children,           Playing/doing hobbies with children,      Working 3,      Socializing and communicating,      Watching television,"      Participating in sports, exercise, and recreation",Travel related to caring for and helping household children,  Other activities
-Employed full time,7.99,0.22,0.31,0.26,0.06,0.22,0.49,0.10,0.08,0.01,0.09,6.11,0.51,2.18,0.34,0.13,1.82
-Not employed,9.01,0.56,0.66,0.45,0.12,0.26,0.68,0.17,0.14,~0,0.10,0.08,0.78,4.05,0.40,0.22,2.49
+﻿Employment Status,Total,Sleeping,Housework,Food Prep,Lawn and garden care,Grocery shopping,Shopping for goods,Caring for children,Physical care,Education related activities,Reading with children,Playing with children,Working,Socializing,Watching television,Recreation,Travel for children,Other activities
+Employed full time,24,7.99,0.22,0.31,0.26,0.06,0.22,0.49,0.1,0.08,0.01,0.09,6.11,0.51,2.18,0.34,0.13,1.82
+Not employed,24,9.01,0.56,0.66,0.45,0.12,0.26,0.68,0.17,0.14,0,0.1,0.08,0.78,4.05,0.4,0.22,2.49
