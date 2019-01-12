@@ -27,11 +27,13 @@ app = Flask(__name__)
 #################################################
 
 # Create Engine and Pass in MySQL Connection
-engine = create_engine("mysql://root:Mun&maj@0723@localhost/actvities_db")
+engine = create_engine("mysql://root:CHOcolates2!#!#!@Localhost/activities_db")
 conn = engine.connect()
 
-data = pd.read_sql("SELECT * activities_db", conn)
-
+data_mf_under6 = engine.execute("SELECT * FROM mf_under_6")
+data_mm_under6 = engine.execute("SELECT * FROM mm_under_6")
+data_mf_6_17= engine.execute("SELECT * FROM mf_6_to_17")
+data_mm_6_17= engine.execute("SELECT * FROM mm_6_to_17")
 
 # Save references to each table
 #mf_6_to_17 = Base.classes.MF_6_to_17
