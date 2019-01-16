@@ -25,27 +25,18 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
+db = pymysql.connect("localhost", "root", "Freehov90@", "activities_db")
 
-# Create Engine and Pass in MySQL Connection
-engine = create_engine("mysql://root:CHOcolates2!#!#!@Localhost/activities_db")
-conn = engine.connect()
+app = Flask(__name__)
 
-data_mf_under6 = engine.execute("SELECT * FROM mf_under_6")
-data_mm_under6 = engine.execute("SELECT * FROM mm_under_6")
-data_mf_6_17= engine.execute("SELECT * FROM mf_6_to_17")
-data_mm_6_17= engine.execute("SELECT * FROM mm_6_to_17")
+@app.route('/')
+def someName():
+   cursor = db.cursor()
+   sql = "SELECT sleeping FROM mf_under_6"
+   cursor.execute(sql)
+   results = cursor.fetchall()
+   #return render_template('index.h, results=results)
+   return jsonify(results)
+if __name__ == '__main__':
+ app.run(debug=True)
 
-# Save references to each table
-#mf_6_to_17 = Base.classes.MF_6_to_17
-#mf_under_6 = Base.classes.MF_under_6
-#mm_6_to_17 = Base.classes.MM_6_to_17
-#mm_under_6 = Base.classes.MM_under_6 
-
-
-@app.route("/")
-def index():
-    """Return the homepage."""
-    return render_template("index.html"),
-
-if __name__ == "__main__":
-    app.run()
