@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 engine = create_engine("mysql://root:Mun&maj@0723@localhost:3306/activities_db")
 conn = engine.connect()
-Base.combined.create_all(conn)
+
 session = Session(bind=engine)
 
 Combined = pd.read_sql("SELECT * FROM combined", conn)
@@ -30,20 +30,20 @@ def index():
     """Return the homepage."""
     return render_template("index.html")
 
-@app.route("/names")
-def names():
+@app.route("/maritalstatus")
+def maritalstatus():
     """Return list Status."""
 
     # Use Pandas to perform the sql query
-    stmt = session.query(Combined).statement
-    df = pd.read_sql_query(pd.read_sql("SELECT Status FROM Combined", conn)
+   
+    df = pd.read_sql_query("SELECT Status FROM Combined", conn)
 
     # Return a list of Status values
     return jsonify(list(df.columns)[2:])
-print(names)
+print(maritalstatus)
 
-@app.route("/combined/<Status>")
-def combined(Status):
+@app.route("/combineddata/<Status>")
+def combineddata(Status):
     """Return the combined for a Status."""
     sel = [
         Combined.Status,
@@ -68,9 +68,9 @@ def combined(Status):
     print(combined)
     return jsonify(combined)
 
-@app.route("/samples/<Status>")
-def samples(Status):
-    """Return `acitivity_IDS, acitivity_labels, sample_values."""
+@app.route("/activity_data/<Status>")
+def acitivity_data(Status):
+    """Return `acitivity_IDS, acitivity_labels, status_values."""
     
     # Filter the data based on Status 
     
@@ -78,7 +78,7 @@ def samples(Status):
     # Format the data to send as json
     data = {
         "acitivity_IDS": sample_data.activity_ID.values.tolist(),
-        "sample_values": sample_data[Status].values.tolist(),
+        "status_values": sample_data[Status].values.tolist(),
         "acitivity_lables": sample_data.activity_label.tolist(),
     }
     return jsonify(data)
