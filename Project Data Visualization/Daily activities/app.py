@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 engine = create_engine("mysql://root:Mun&maj@0723@localhost:3306/activities_db")
 conn = engine.connect()
-Base.metadata.create_all(conn)
+Base.combined.create_all(conn)
 session = Session(bind=engine)
 
 Combined = pd.read_sql("SELECT * FROM combined", conn)
@@ -35,16 +35,16 @@ def names():
     """Return list Status."""
 
     # Use Pandas to perform the sql query
-    stmt = session.query(Activities_data).statement
-    df = pd.read_sql_query(stmt, session.bind)
+    stmt = session.query(Combined).statement
+    df = pd.read_sql_query(pd.read_sql("SELECT Status FROM Combined", conn)
 
-    # Return a list of the column names (sample names)
+    # Return a list of Status values
     return jsonify(list(df.columns)[2:])
 print(names)
 
-@app.route("/metadata/<sample>")
-def sample_metadata(Status):
-    """Return the MetaData for a Status."""
+@app.route("/combined/<Status>")
+def combined(Status):
+    """Return the combined for a Status."""
     sel = [
         Combined.Status,
         Combined.Housework,
@@ -65,15 +65,13 @@ def sample_metadata(Status):
         combined["Working"] = result[4]
         
 
-    print(sample_metadata)
-    return jsonify(sample_metadata)
+    print(combined)
+    return jsonify(combined)
 
-@app.route("/samples/<sample>")
+@app.route("/samples/<Status>")
 def samples(Status):
     """Return `acitivity_IDS, acitivity_labels, sample_values."""
-    stmt = session.query(Activities_data).statement
-    df = pd.read_sql_query(stmt, session.bind)
-
+    
     # Filter the data based on Status 
     
     sample_data = pd.read_sql("Select activity_ID activity_label Status From Activities_data", conn)

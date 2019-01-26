@@ -5,8 +5,8 @@ var PanelData = d3.select("#sample-metadata");
 // Using function to fetch the metada route to select Status
 // from app.py
 
-function buildMetadata(sample) {
-  d3.json(`/metadata/${sample}`).then((values) => {
+function buildMetadata(Status) {
+  d3.json(`/combined/${Status}`).then((values) => {
       
     // Use `.html("") to clear any existing data
     PanelData.html("");
@@ -26,12 +26,41 @@ function buildMetadata(sample) {
 // Using d3 json to build the bubble and pie charts
 // from app.y sample route and use constant variables to build the charts
 
-function buildCharts(combined) {
-  d3.json(`/samples/${sample}`).then((values) => {
+function buildCharts(Status) {
+  d3.json(`/samples/${Status}`).then((values) => {
     const acitivity_IDS = values.acitivity_IDS;
     const activity_labels = values.activity_labels;
     const sample_values = values.sample_values;
     console.log(activity_labels,acitivity_IDS,sample_values);
+
+  // Bubble Chart
+  var bubbleChartLayout = {
+      title: 'Daily Activities Bubble Chart',
+      height: 700,
+      width: 1200,
+      showlegend: true,
+      hoverinfo: "activity_labels",
+               
+    };
+    var bubbleChartData = [
+      {
+        x: acitivity_IDS,
+        y: sample_values,
+        text: activity_labels,
+        mode: "markers",
+        marker: {
+          size: sample_values,
+          color: acitivity_IDS,
+          colorscale: "Rainbow"
+        }
+      }
+    ];
+
+
+   //Using plotly.plot selecting the bubble elment and passing
+   //the bubble chart data and the bubble chart layout for that selected sample
+    Plotly.plot("bubble", bubbleChartData, bubbleChartLayout);
+
 
   var pieChartLayout = {
       title: "Daily Activities Pie Chart",
@@ -52,18 +81,18 @@ function buildCharts(combined) {
     Plotly.plot("pie", pieChartData, pieChartLayout);
   });
 }
-// This code is given in the starter code 
+
 function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
 
   // Use the list of sample names to populate the select options
   d3.json("/names").then((sampleNames) => {
-    sampleNames.forEach((sample) => {
+    sampleNames.forEach((Status) => {
       selector
         .append("option")
-        .text(sample)
-        .property("value", sample);
+        .text(Status)
+        .property("value", Status);
     });
 
     // Use the first sample from the list to build the initial plots
