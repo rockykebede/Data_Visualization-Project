@@ -2,13 +2,13 @@
 
 var PanelData = d3.select("#sample-metadata");
 
-// Using function to fetch the metada route to select the sample data
+// Using function to fetch the metada route to select Status
 // from app.py
 
-function buildMetadata(sample) {
-  d3.json(`/metadata/${sample}`).then((values) => {
+function buildMetadata(Status) {
+  d3.json(`/combined/${Status}`).then((values) => {
       
-    // Use `.html("") to clear any existing metadata
+    // Use `.html("") to clear any existing data
     PanelData.html("");
 
     // Using `Object.entries` and 'for each' to add 
@@ -26,31 +26,31 @@ function buildMetadata(sample) {
 // Using d3 json to build the bubble and pie charts
 // from app.y sample route and use constant variables to build the charts
 
-function buildCharts(sample) {
-  d3.json(`/samples/${sample}`).then((values) => {
-    const otu_ids = values.otu_ids;
-    const otu_labels = values.otu_labels;
+function buildCharts(Status) {
+  d3.json(`/samples/${Status}`).then((values) => {
+    const acitivity_IDS = values.acitivity_IDS;
+    const activity_labels = values.activity_labels;
     const sample_values = values.sample_values;
-    console.log(otu_ids,otu_labels,sample_values);
+    console.log(activity_labels,acitivity_IDS,sample_values);
 
-    // Bubble Chart
-    var bubbleChartLayout = {
-      title: 'Belly Button BioDiversity Bubble Chart',
+  // Bubble Chart
+  var bubbleChartLayout = {
+      title: 'Daily Activities Bubble Chart',
       height: 700,
       width: 1200,
       showlegend: true,
-      hoverinfo: "otu_labels",
+      hoverinfo: "activity_labels",
                
     };
     var bubbleChartData = [
       {
-        x: otu_ids,
+        x: acitivity_IDS,
         y: sample_values,
-        text: otu_labels,
+        text: activity_labels,
         mode: "markers",
         marker: {
           size: sample_values,
-          color: otu_ids,
+          color: acitivity_IDS,
           colorscale: "Rainbow"
         }
       }
@@ -61,43 +61,38 @@ function buildCharts(sample) {
    //the bubble chart data and the bubble chart layout for that selected sample
     Plotly.plot("bubble", bubbleChartData, bubbleChartLayout);
 
-    // Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
 
-    //Using piechart data and layout to plot the pie chart
-    //using sample values, otu_ids, otu_lables
   var pieChartLayout = {
-      title: "Belly Button BioDiversity Pie Chart",
+      title: "Daily Activities Pie Chart",
       height: 600,
       width: 800
     };
   var pieChartData = [
       {
-        // using slice to get the first 10 sample values
-        values: sample_values.slice(0, 10),
-        labels: otu_ids.slice(0, 10),
-        hoverinfo: "otu_labels.slice(0, 10)",
+        
+        values: sample_values,
+        labels: acitivity_IDS,
+        hoverinfo: "activity_labels",
         type: "pie"
       }
     ]; 
    //Using plotly.plot selecting the pie elment and passing
-   //the pie chart data and the pie chart layout for that selected sample
+   //the pie chart data and the pie chart layout for that selected Status
     Plotly.plot("pie", pieChartData, pieChartLayout);
   });
 }
-// This code is given in the starter code 
+
 function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
 
   // Use the list of sample names to populate the select options
   d3.json("/names").then((sampleNames) => {
-    sampleNames.forEach((sample) => {
+    sampleNames.forEach((Status) => {
       selector
         .append("option")
-        .text(sample)
-        .property("value", sample);
+        .text(Status)
+        .property("value", Status);
     });
 
     // Use the first sample from the list to build the initial plots
@@ -115,4 +110,3 @@ function optionChanged(newSample) {
 
 // Initialize the dashboard
 init();
-
