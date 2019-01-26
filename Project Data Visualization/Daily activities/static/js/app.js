@@ -8,7 +8,7 @@ var PanelData = d3.select("#sample-metadata");
 function buildMetadata(sample) {
   d3.json(`/metadata/${sample}`).then((values) => {
       
-    // Use `.html("") to clear any existing metadata
+    // Use `.html("") to clear any existing data
     PanelData.html("");
 
     // Using `Object.entries` and 'for each' to add 
@@ -40,7 +40,7 @@ function buildCharts(combined) {
     };
   var pieChartData = [
       {
-        // using slice to get the first 10 sample values
+        
         values: sample_values,
         labels: acitivity_IDS,
         hoverinfo: "activity_labels",
@@ -48,7 +48,7 @@ function buildCharts(combined) {
       }
     ]; 
    //Using plotly.plot selecting the pie elment and passing
-   //the pie chart data and the pie chart layout for that selected sample
+   //the pie chart data and the pie chart layout for that selected Status
     Plotly.plot("pie", pieChartData, pieChartLayout);
   });
 }

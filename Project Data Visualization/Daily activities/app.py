@@ -44,7 +44,7 @@ print(names)
 
 @app.route("/metadata/<sample>")
 def sample_metadata(Status):
-    """Return the MetaData for a given sample."""
+    """Return the MetaData for a Status."""
     sel = [
         Combined.Status,
         Combined.Housework,
@@ -55,7 +55,7 @@ def sample_metadata(Status):
 
     results = session.query(*sel).filter(Combined.Status == Status).all()
 
-    # Create a dictionary entry for each row of metadata information
+    # Create a dictionary entry for each row of Combined dataframe
     combined = {}
     for result in results:
         combined["Status"] = result[0]
@@ -80,7 +80,7 @@ def samples(Status):
     # Format the data to send as json
     data = {
         "acitivity_IDS": sample_data.activity_ID.values.tolist(),
-        "sample_values": sample_data[sample].values.tolist(),
+        "sample_values": sample_data[Status].values.tolist(),
         "acitivity_lables": sample_data.activity_label.tolist(),
     }
     return jsonify(data)
