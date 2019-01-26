@@ -83,7 +83,11 @@ function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
 
+<<<<<<< HEAD
   // Use the list of Mstatus to populate the select options
+=======
+  // Use the list of Marital Status to populate the select options
+>>>>>>> bcf855daf8642f10aa33b35d659e18a92a6c8310
   d3.json("/maritalstatus").then((sampleNames) => {
     sampleNames.forEach((Mstatus) => {
       selector
@@ -100,7 +104,11 @@ function init() {
 }
 
 function optionChanged(newSample) {
+<<<<<<< HEAD
   // Fetch new data each time a new Mstatus is selected
+=======
+  // Fetch new data each time a new marital Status is selected
+>>>>>>> bcf855daf8642f10aa33b35d659e18a92a6c8310
   buildCharts(newSample);
   buildMetadata(newSample);
 }
