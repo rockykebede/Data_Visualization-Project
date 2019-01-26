@@ -1,6 +1,6 @@
 var data = [
   {
-    "Status": "MM006",
+    "MStatus": "MM006",
     "Employment_Status": "EmpfullTime",
     "Sleeping": 8.09,
     "Housework": 0.24,
@@ -21,7 +21,7 @@ var data = [
     "Other_activities": 1.72
   },
   {
-    "Status": "MM006",
+    "MStatus": "MM006",
     "Employment_Status": "NotEmployed",
     "Sleeping": 8.88,
     "Housework": 0.68,
@@ -42,7 +42,7 @@ var data = [
     "Other_activities": 2.41
   },
   {
-    "Status": "MM617",
+    "MStatus": "MM617",
     "Employment_Status": "EmployedPartTime",
     "Sleeping": 8.49,
     "Housework": 1,
@@ -63,7 +63,7 @@ var data = [
     "Other_activities": 2.02
   },
   {
-    "Status": "MM617",
+    "MStatus": "MM617",
     "Employment_Status": "NotEmployed",
     "Sleeping": 8.92,
     "Housework": 1.46,
@@ -84,7 +84,7 @@ var data = [
     "Other_activities": 2.28
   },
   {
-    "Status": "MF006",
+    "MStatus": "MF006",
     "Employment_Status": "EmployedFullTime",
     "Sleeping": 8.09,
     "Housework": 0.24,
@@ -105,7 +105,7 @@ var data = [
     "Other_activities": 1.72
   },
   {
-    "Status": "MF006",
+    "MStatus": "MF006",
     "Employment_Status": "NotEmployed",
     "Sleeping": 8.88,
     "Housework": 0.68,
@@ -126,7 +126,7 @@ var data = [
     "Other_activities": 2.41
   },
   {
-    "Status": "MF617",
+    "MStatus": "MF617",
     "Employment_Status": "EmployedPartTime",
     "Sleeping": 8.44,
     "Housework": 1.28,
@@ -147,7 +147,7 @@ var data = [
     "Other_activities": 2.12
   },
   {
-    "Status": "MF617",
+    "MStatus": "MF617",
     "Employment_Status": "NotEmployed",
     "Sleeping": 8.71,
     "Housework": 1.68,

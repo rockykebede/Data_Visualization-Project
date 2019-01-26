@@ -3,8 +3,8 @@
 var PanelData = d3.select("#sample-metadata");
 
 
-function buildMetadata(Status) {
-  d3.json(`/combineddata/${Status}`).then((values) => {
+function buildMetadata(Mstatus) {
+  d3.json(`/combineddata/${Mstatus}`).then((values) => {
       
     // Use `.html("") to clear any existing data
     PanelData.html("");
@@ -23,12 +23,12 @@ function buildMetadata(Status) {
 }
 // Using d3 json to build the bubble and pie charts
 
-function buildCharts(Status) {
-  d3.json(`/activity_data/${Status}`).then((values) => {
+function buildCharts(Mstatus) {
+  d3.json(`/activity_data/${Mstatus}`).then((values) => {
     const acitivity_IDS = values.acitivity_IDS;
     const activity_labels = values.activity_labels;
-    const status_values = values.status_values;
-    console.log(activity_labels,acitivity_IDS,status_values);
+    const Mstatus_values = values.Mstatus_values;
+    console.log(activity_labels,acitivity_IDS,Mstatus_values);
 
   // Bubble Chart
   var bubbleChartLayout = {
@@ -42,11 +42,11 @@ function buildCharts(Status) {
     var bubbleChartData = [
       {
         x: acitivity_IDS,
-        y: status_values,
+        y: Mstatus_values,
         text: activity_labels,
         mode: "markers",
         marker: {
-          size: status_values,
+          size: Mstatus_values,
           color: acitivity_IDS,
           colorscale: "Rainbow"
         }
@@ -67,14 +67,14 @@ function buildCharts(Status) {
   var pieChartData = [
       {
         
-        values: status_values,
+        values: Mstatus_values,
         labels: acitivity_IDS,
         hoverinfo: "activity_labels",
         type: "pie"
       }
     ]; 
    //Using plotly.plot selecting the pie elment and passing
-   //the pie chart data and the pie chart layout for that selected Status
+   //the pie chart data and the pie chart layout for that selected MStatus
     Plotly.plot("pie", pieChartData, pieChartLayout);
   });
 }
@@ -83,13 +83,13 @@ function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
 
-  // Use the list of Status to populate the select options
+  // Use the list of Mstatus to populate the select options
   d3.json("/maritalstatus").then((sampleNames) => {
-    sampleNames.forEach((Status) => {
+    sampleNames.forEach((Mstatus) => {
       selector
         .append("option")
-        .text(Status)
-        .property("value", Status);
+        .text(Mstatus)
+        .property("value", Mstatus);
     });
 
     // Use the first value from the list to build the initial plots
@@ -100,7 +100,7 @@ function init() {
 }
 
 function optionChanged(newSample) {
-  // Fetch new data each time a new Status is selected
+  // Fetch new data each time a new Mstatus is selected
   buildCharts(newSample);
   buildMetadata(newSample);
 }
