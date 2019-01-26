@@ -32,33 +32,33 @@ def index():
 
 @app.route("/maritalstatus")
 def maritalstatus():
-    """Return list Status."""
+    """Return list martiastatus (Mstatus)."""
 
     # Use Pandas to perform the sql query
-   
-    df = pd.read_sql_query("SELECT Status FROM Combined", conn)
+    
+    df = pd.read_sql_query("SELECT Mstatus FROM Combined", conn)
 
-    # Return a list of Status values
+    # Return a list of Mstatus values
     return jsonify(list(df.columns)[2:])
 print(maritalstatus)
 
-@app.route("/combineddata/<Status>")
-def combineddata(Status):
-    """Return the combined for a Status."""
+@app.route("/combineddata/<Mstatus>")
+def combineddata(Mstatus):
+    """Return the combined for a Mstatus."""
     sel = [
-        Combined.Status,
+        Combined.Mstatus,
         Combined.Housework,
         Combined.Sleeping,
         Combined.Shopping_goods,
         Combined.Working,
             ]
 
-    results = session.query(*sel).filter(Combined.Status == Status).all()
+    results = session.query(*sel).filter(Combined.Mstatus == Mstatus).all()
 
     # Create a dictionary entry for each row of Combined dataframe
     combined = {}
     for result in results:
-        combined["Status"] = result[0]
+        combined["Mstatus"] = result[0]
         combined["Housework"] = result[1]
         combined["Sleeping"] = result[2]
         combined["Shopping_goods"] = result[3]
@@ -68,17 +68,17 @@ def combineddata(Status):
     print(combined)
     return jsonify(combined)
 
-@app.route("/activity_data/<Status>")
-def acitivity_data(Status):
-    """Return `acitivity_IDS, acitivity_labels, status_values."""
+@app.route("/activity_data/<Mstatus>")
+def acitivity_data(MStatus):
+    """Return `acitivity_IDS, acitivity_labels, Mstatus_values."""
     
-    # Filter the data based on Status 
+    # Filter the data based on Mstatus 
     
-    sample_data = pd.read_sql("Select activity_ID activity_label Status From Activities_data", conn)
+    sample_data = pd.read_sql("Select activity_ID activity_label Mstatus From Activities_data", conn)
     # Format the data to send as json
     data = {
         "acitivity_IDS": sample_data.activity_ID.values.tolist(),
-        "status_values": sample_data[Status].values.tolist(),
+        "Mstatus_values": sample_data[Mstatus].values.tolist(),
         "acitivity_lables": sample_data.activity_label.tolist(),
     }
     return jsonify(data)
