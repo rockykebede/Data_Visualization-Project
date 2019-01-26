@@ -2,7 +2,7 @@
 
 var PanelData = d3.select("#sample-metadata");
 
-// Using function to fetch the metada route to select the sample data
+// Using function to fetch the metada route to select Status
 // from app.py
 
 function buildMetadata(sample) {
@@ -26,58 +26,24 @@ function buildMetadata(sample) {
 // Using d3 json to build the bubble and pie charts
 // from app.y sample route and use constant variables to build the charts
 
-function buildCharts(sample) {
+function buildCharts(combined) {
   d3.json(`/samples/${sample}`).then((values) => {
-    const otu_ids = values.otu_ids;
-    const otu_labels = values.otu_labels;
+    const acitivity_IDS = values.acitivity_IDS;
+    const activity_labels = values.activity_labels;
     const sample_values = values.sample_values;
-    console.log(otu_ids,otu_labels,sample_values);
+    console.log(activity_labels,acitivity_IDS,sample_values);
 
-    // Bubble Chart
-    var bubbleChartLayout = {
-      title: 'Belly Button BioDiversity Bubble Chart',
-      height: 700,
-      width: 1200,
-      showlegend: true,
-      hoverinfo: "otu_labels",
-               
-    };
-    var bubbleChartData = [
-      {
-        x: otu_ids,
-        y: sample_values,
-        text: otu_labels,
-        mode: "markers",
-        marker: {
-          size: sample_values,
-          color: otu_ids,
-          colorscale: "Rainbow"
-        }
-      }
-    ];
-
-
-   //Using plotly.plot selecting the bubble elment and passing
-   //the bubble chart data and the bubble chart layout for that selected sample
-    Plotly.plot("bubble", bubbleChartData, bubbleChartLayout);
-
-    // Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
-
-    //Using piechart data and layout to plot the pie chart
-    //using sample values, otu_ids, otu_lables
   var pieChartLayout = {
-      title: "Belly Button BioDiversity Pie Chart",
+      title: "Daily Activities Pie Chart",
       height: 600,
       width: 800
     };
   var pieChartData = [
       {
         // using slice to get the first 10 sample values
-        values: sample_values.slice(0, 10),
-        labels: otu_ids.slice(0, 10),
-        hoverinfo: "otu_labels.slice(0, 10)",
+        values: sample_values,
+        labels: acitivity_IDS,
+        hoverinfo: "activity_labels",
         type: "pie"
       }
     ]; 
@@ -115,4 +81,3 @@ function optionChanged(newSample) {
 
 // Initialize the dashboard
 init();
-
