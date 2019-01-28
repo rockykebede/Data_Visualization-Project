@@ -32,21 +32,6 @@ def index():
 
 @app.route("/maritalstatus")
 def maritalstatus():
-<<<<<<< HEAD
-    """Return list Mstatus."""
-
-    # Use Pandas to perform the sql query
-   
-    df = pd.read_sql_query("SELECT MStatus FROM Combined", conn)
-
-    # Return a list of MStatus values
-    return jsonify(list(df.columns)[2:])
-print(maritalstatus)
-
-@app.route("/combineddata/<MStatus>")
-def combineddata(Mstatus):
-    """Return the combined for a MStatus."""
-=======
     """Return list martiastatus (Mstatus)."""
 
     # Use Pandas to perform the sql query
@@ -60,7 +45,6 @@ print(maritalstatus)
 @app.route("/combineddata/<Mstatus>")
 def combineddata(Mstatus):
     """Return the combined for a Mstatus."""
->>>>>>> bcf855daf8642f10aa33b35d659e18a92a6c8310
     sel = [
         Combined.Mstatus,
         Combined.Housework,
@@ -69,11 +53,7 @@ def combineddata(Mstatus):
         Combined.Working,
             ]
 
-<<<<<<< HEAD
-    results = session.query(*sel).filter(Combined.MStatus == MStatus).all()
-=======
     results = session.query(*sel).filter(Combined.Mstatus == Mstatus).all()
->>>>>>> bcf855daf8642f10aa33b35d659e18a92a6c8310
 
     # Create a dictionary entry for each row of Combined dataframe
     combined = {}
@@ -84,23 +64,10 @@ def combineddata(Mstatus):
         combined["Shopping_goods"] = result[3]
         combined["Working"] = result[4]
         
-
-    print(combined)
+print(combined)
+   
     return jsonify(combined)
 
-<<<<<<< HEAD
-@app.route("/activity_data/<MStatus>")
-def acitivity_data(Mstatus):
-    """Return `acitivity_IDS, acitivity_labels, Mstatus_values."""
-    
-    # Filter the data based on MStatus 
-    
-    sample_data = pd.read_sql("Select activity_ID activity_label MStatus From Activities_data", conn)
-    # Format the data to send as json
-    data = {
-        "acitivity_IDS": sample_data.activity_ID.values.tolist(),
-        "Mstatus_values": sample_data[MStatus].values.tolist(),
-=======
 @app.route("/activity_data/<Mstatus>")
 def acitivity_data(MStatus):
     """Return `acitivity_IDS, acitivity_labels, Mstatus_values."""
@@ -112,10 +79,9 @@ def acitivity_data(MStatus):
     data = {
         "acitivity_IDS": sample_data.activity_ID.values.tolist(),
         "Mstatus_values": sample_data[Mstatus].values.tolist(),
->>>>>>> bcf855daf8642f10aa33b35d659e18a92a6c8310
         "acitivity_lables": sample_data.activity_label.tolist(),
     }
     return jsonify(data)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
